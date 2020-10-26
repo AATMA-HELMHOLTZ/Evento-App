@@ -1,0 +1,43 @@
+const FOOD_DATA = [
+  {
+    "name":"Photographers",
+    "image":"photog.png"
+  },{
+    "name":"Decorations",
+    "image":"deco.png"
+  },
+  {
+    "name":"Exciting Djs",
+    "image":"dj.png"
+  },
+  {
+    "name":"Florists",
+    "image":"florist.png"
+  },
+  {
+    "name":"Caterers",
+    "image":"catering.png"
+  },
+  {
+    "name":"Bakery",
+    "image":"bakery.png"
+  },
+  {
+    "name":"Pizza",
+    "brand":"Dominos",
+    "price":17.99,
+    "image":"pizza.png"
+  },
+  {
+    "name":"Sandwich",
+    "brand":"Hawkers",
+    "price":2.99,
+    "image":"sandwich.png"
+  },
+  {
+    "name":"Wrap",
+    "brand":"Subway",
+    "price":6.99,
+    "image":"wrap.png"
+  }
+];

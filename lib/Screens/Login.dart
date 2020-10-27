@@ -29,7 +29,7 @@ class _loginState extends State<login> {
       "email": userController.text,
       "password": passController.text,
     };
-    var response = await networkHandler.post("/user/login", data);
+    var response = await networkHandler.post("/api/v1/user/login", data);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       Map<String, dynamic> output = json.decode(response.body);
@@ -139,7 +139,9 @@ class _loginState extends State<login> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: signup()));
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(builder: (context) => SideBarLayout()),
+                                  (route)=>false );
                         });
                       },
                       child: OutlineBtn(

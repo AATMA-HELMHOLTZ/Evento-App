@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Widgets/Buttons.dart';
 import 'package:flutter_app/Widgets/InputField.dart';
 import 'package:flutter_app/sidebar/sidebar_layout.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../networkHandler.dart';
 import 'SignUp.dart';
 
 class login extends StatefulWidget {
@@ -13,8 +16,37 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
 
-  TextEditingController userController;
-  TextEditingController passController;
+  final userController = TextEditingController();
+  final passController = TextEditingController();
+  NetworkHandler networkHandler = NetworkHandler();
+  final storage = new FlutterSecureStorage();
+  bool validate = false;
+  bool circular = false;
+  String errorText;
+
+  logMeIn() async {
+    Map<String, String> data = {
+      "email": userController.text,
+      "password": passController.text,
+    };
+    var response = await networkHandler.post("/user/login", data);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Map<String, dynamic> output = json.decode(response.body);
+      storage.write(key: "token", value: output["token"]);
+      print(output["token"]);
+      setState(() {
+        validate = true;
+        circular = false;
+      });
+    } else {
+      setState(() {
+        validate = false;
+        errorText = "Incorrect email/password combination";
+        circular = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,12 +119,17 @@ class _loginState extends State<login> {
                 Column(
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         setState(() {
-                          Navigator.push(context, PageTransition(type: PageTransitionType.scale, child: SideBarLayout()));
+                          circular = true;
                         });
+                        await logMeIn();
+                        if(validate == true && circular == false)
+                        {
+                          Navigator.push(context, PageTransition(type: PageTransitionType.scale, child: SideBarLayout()));
+                        };
                       },
-                      child: PrimaryButton(
+                      child: circular ? CircularProgressIndicator() : PrimaryButton (
                         btnText: "Login",
                       ),
                     ),

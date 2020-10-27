@@ -47,14 +47,13 @@ class _signupState extends State<signup> {
     }
   }
   signMeUp() async {
-    if (formKey.currentState.validate() &&
-        validate) {
+    if (true) {
       Map<String, String> data = {
-        "username": userController.text,
+        "email": userController.text,
         "password": passController.text
       };
       print(data);
-      await networkHandler.post("/user/register", data);
+      await networkHandler.post("/api/v1/user/signup", data);
       setState(() {
         circular = false;
       });
@@ -108,8 +107,8 @@ class _signupState extends State<signup> {
                         setState(() {
                           circular = true;
                         });
-                        await checkUser();
-                        signMeUp();
+//                        await checkUser();
+                        await signMeUp();
                       },
                       child: circular ? CircularProgressIndicator() : PrimaryButton(
 

@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class NetworkHandler {
-  String baseurl = "http://192.168.1.4:5000/";
-  // Hereko link
+  String baseurl = "http://10.0.2.2:5000";
+  // Hereko link  localhost:5000/api/v1/user/signup
 
   var log = Logger();
 
@@ -19,7 +19,7 @@ class NetworkHandler {
     log.i(response.statusCode);
   }
 
-  Future<dynamic> post(String url, Map<String, String> body) async {
+  Future<http.Response> post(String url, Map<String, String> body) async {
     url = formater(url);
     var response = await http.post(
       url,

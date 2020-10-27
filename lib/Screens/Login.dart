@@ -33,6 +33,8 @@ class _loginState extends State<login> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       Map<String, dynamic> output = json.decode(response.body);
+
+
       storage.write(key: "token", value: output["token"]);
       print(output["token"]);
       setState(() {
@@ -40,6 +42,8 @@ class _loginState extends State<login> {
         circular = false;
       });
     } else {
+      print("herererJHSDFH");
+      
       setState(() {
         validate = false;
         errorText = "Incorrect email/password combination";
@@ -126,7 +130,9 @@ class _loginState extends State<login> {
                         await logMeIn();
                         if(validate == true && circular == false)
                         {
-                          Navigator.push(context, PageTransition(type: PageTransitionType.scale, child: SideBarLayout()));
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(builder: (context) => SideBarLayout()),
+                                  (route)=>false );
                         };
                       },
                       child: circular ? CircularProgressIndicator() : PrimaryButton (
@@ -139,9 +145,7 @@ class _loginState extends State<login> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          Navigator.pushAndRemoveUntil(context,
-                              MaterialPageRoute(builder: (context) => SideBarLayout()),
-                                  (route)=>false );
+                          Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: signup()));
                         });
                       },
                       child: OutlineBtn(

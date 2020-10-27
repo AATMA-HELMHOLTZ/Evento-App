@@ -26,12 +26,13 @@ class NetworkHandler {
       headers: {"Content-type": "application/json"},
       body: json.encode(body),
     );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      log.i(response.body);
-      return response;
-    }
-    log.d(response.body);
-    log.d(response.statusCode);
+//    if (response.statusCode == 200 || response.statusCode == 201) {
+//      log.i(response.body);
+//      return response;
+//    }
+//    log.d(response.body);
+//    log.d(response.statusCode);
+  return response;
   }
 
   String formater(String url) {

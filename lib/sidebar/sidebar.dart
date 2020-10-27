@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/Onboarding.dart';
 import 'package:flutter_app/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'menu_item.dart';
@@ -18,6 +20,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   Stream <bool> isSidebarOpenedStream;
   StreamSink <bool> isSidebarOpenedSink;
   AnimationController _animationController;
+  final storage = FlutterSecureStorage();
 
   final _animationDuration = const Duration(milliseconds: 500);
 
@@ -52,6 +55,13 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         isSidebarOpenedSink.add(true);
         _animationController.forward();
       }
+  }
+  void logMeOut() async {
+    await storage.delete(key: "token");
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Onboarding()),
+            (route) => false);
   }
   @override
   Widget build(BuildContext context) {
@@ -145,9 +155,12 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         icon: Icons.settings,
                         title: "Settings",
                       ),
-                      MenuItem(
-                        icon: Icons.exit_to_app,
-                        title: "Logout",
+                      GestureDetector(
+                        onTap: logMeOut,
+                        child: MenuItem(
+                          icon: Icons.exit_to_app,
+                          title: "Logout",
+                        ),
                       ),
                     ],
                   ),

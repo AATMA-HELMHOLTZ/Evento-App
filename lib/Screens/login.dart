@@ -7,7 +7,7 @@ import 'package:flutter_app/sidebar/sidebar_layout.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../networkHandler.dart';
-import 'SignUp.dart';
+import 'signUp.dart';
 
 class login extends StatefulWidget {
   @override

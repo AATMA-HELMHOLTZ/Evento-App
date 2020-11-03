@@ -4,7 +4,7 @@ import 'package:flutter_app/Widgets/InputField.dart';
 import 'package:flutter_app/networkHandler.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'Login.dart';
+import 'login.dart';
 
 class signup extends StatefulWidget {
   @override

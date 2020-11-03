@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/individualVendorSearch.dart';
 import 'package:flutter_app/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import '../constants.dart';
 import 'moreTempltes.dart';
 
@@ -204,15 +206,20 @@ class _MyHomePageState extends State<MyHomePage> {
                             scale = 1;
                           }
                         }
-                        return Opacity(
-                          opacity: scale,
-                          child: Transform(
-                            transform:  Matrix4.identity()..scale(scale,scale),
-                            alignment: Alignment.bottomCenter,
-                            child: Align(
-                                heightFactor: 0.7,
-                                alignment: Alignment.topCenter,
-                                child: itemsData[index]),
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: IndividualSearch()));
+                          },
+                          child: Opacity(
+                            opacity: scale,
+                            child: Transform(
+                              transform:  Matrix4.identity()..scale(scale,scale),
+                              alignment: Alignment.bottomCenter,
+                              child: Align(
+                                  heightFactor: 0.7,
+                                  alignment: Alignment.topCenter,
+                                  child: itemsData[index]),
+                            ),
                           ),
                         );
                       })),

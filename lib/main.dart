@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Screens/Onboarding.dart';
+import 'package:flutter_app/Screens/onboarding.dart';
 import 'package:flutter_app/sidebar/sidebar_layout.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

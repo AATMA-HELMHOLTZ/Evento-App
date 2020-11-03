@@ -34,7 +34,7 @@ class _VendorProfileState extends State<VendorProfile> {
                               colors: [
                                 Colors.black,
                                 Colors.black.withOpacity(.3)
-                              ]
+                            ]
                           )
                       ),
                       child: Padding(

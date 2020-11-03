@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/profilePic.dart';
 import 'package:flutter_app/Widgets/Buttons.dart';
 import 'package:flutter_app/Widgets/InputField.dart';
 import 'package:flutter_app/networkHandler.dart';
@@ -96,22 +97,49 @@ class _signupState extends State<signup> {
                       icon: Icons.vpn_key,
                       hint: "Enter Password...",
                       passwordController: passController,
-                    )
+                    ),
+                    SizedBox(height: 20,),
+                    InputWithIcon(
+                      icon: Icons.person_rounded,
+                      hint: "Enter Your Name",
+                      mailController: userController,
+                    ),
+                    SizedBox(height: 20,),
+                    InputWithIcon(
+                      icon: Icons.location_city_outlined,
+                      hint: "Enter Your City",
+                      mailController: userController,
+                    ),
+                    SizedBox(height: 20,),
+                    InputWithIcon(
+                      icon: Icons.phone_android,
+                      hint: "Enter Phone number",
+                      mailController: userController,
+                    ),
+                    SizedBox(height: 20,),
                   ],
                 ),
                 Padding(padding: const EdgeInsets.all(20)),
                 Column(
                   children: <Widget>[
+//                     GestureDetector(
+//                       onTap: () async {
+//                         setState(() {
+//                           circular = true;
+//                         });
+// //                        await checkUser();
+//                         await signMeUp();
+//                       },
+//                       child: circular ? CircularProgressIndicator() : PrimaryButton(
+//
+//                         btnText: "Create Account",
+//                       ),
+//                     ),
                     GestureDetector(
-                      onTap: () async {
-                        setState(() {
-                          circular = true;
-                        });
-//                        await checkUser();
-                        await signMeUp();
+                      onTap: (){
+                        Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: ProfilePic()));
                       },
-                      child: circular ? CircularProgressIndicator() : PrimaryButton(
-
+                      child: PrimaryButton(
                         btnText: "Create Account",
                       ),
                     ),

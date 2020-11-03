@@ -111,7 +111,7 @@ Widget _myListView(BuildContext context) {
                     FlatButton.icon(onPressed: (){
                       Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: VendorProfile()));
                     },
-                        icon: Icon(Icons.arrow_forward_ios_rounded),
+                        icon: Icon(Icons.arrow_forward_ios),
                         label: Text("Know more"))      //Icons.arrow_forward_ios_rounded
                   ],
                 ),

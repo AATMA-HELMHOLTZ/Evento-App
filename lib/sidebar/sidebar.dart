@@ -133,24 +133,24 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         },
                       ),
                       MenuItem(
-                        icon: Icons.person,
-                        title: "My Account",
+                        icon: Icons.shopping_cart,
+                        title: "My Cart",
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyAccountClickedEvent);
                         },
                       ),
                       MenuItem(
-                        icon: Icons.shopping_basket,
-                        title: "Previous Successful",
+                        icon: Icons.event_available_outlined,
+                        title: "Previous Events",
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SuggestionsClickedEvent);
                         },
                       ),
                       MenuItem(
-                        icon: Icons.category,
-                        title: "Support",
+                        icon: Icons.live_help_rounded,
+                        title: "Support and FAQ",
                       ),
                       Divider(
                         height: 64,

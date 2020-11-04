@@ -124,7 +124,9 @@ class _ProfilePicState extends State<ProfilePic> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: SideBarLayout()));
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) => SideBarLayout()),
+                              (route)=>false );
                     });
                   },
                   child: OutlineBtn(

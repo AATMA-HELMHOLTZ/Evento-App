@@ -14,8 +14,11 @@ class signup extends StatefulWidget {
 
 class _signupState extends State<signup> {
 
-  final userController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passController = TextEditingController();
+  final cityController = TextEditingController();
+  final numController = TextEditingController();
   final networkHandler = NetworkHandler();
 
   bool circular = false;
@@ -24,7 +27,7 @@ class _signupState extends State<signup> {
   final formKey = GlobalKey<FormState>();
 
   checkUser() async {
-    if (userController.text.length == 0) {
+    if (emailController.text.length == 0) {
       setState(() {
         circular = false;
         validate = false;
@@ -32,7 +35,7 @@ class _signupState extends State<signup> {
       });
     } else {
       var response =
-      await networkHandler.get("/user/checkUsername/${userController.text}");
+      await networkHandler.get("/user/checkUsername/${emailController.text}");
       if (response["Status"]) {
         setState(() {
           circular = false;
@@ -50,8 +53,11 @@ class _signupState extends State<signup> {
   signMeUp() async {
     if (true) {
       Map<String, String> data = {
-        "email": userController.text,
-        "password": passController.text
+        "name": nameController.text,
+        "email": emailController.text,
+        "password": passController.text,
+        "mobile": numController.text,
+        "city": cityController.text,
       };
       print(data);
       await networkHandler.post("/api/v1/user/signup", data);
@@ -88,9 +94,15 @@ class _signupState extends State<signup> {
                       ),
                     ),
                     InputWithIcon(
+                      icon: Icons.person_rounded,
+                      hint: "Enter Your Name",
+                      mailController: nameController,
+                    ),
+                    SizedBox(height: 20,),
+                    InputWithIcon(
                       icon: Icons.email,
                       hint: "Enter Email...",
-                      mailController: userController,
+                      mailController: emailController,
                     ),
                     SizedBox(height: 20,),
                     PassWithIcon(
@@ -100,21 +112,15 @@ class _signupState extends State<signup> {
                     ),
                     SizedBox(height: 20,),
                     InputWithIcon(
-                      icon: Icons.person_rounded,
-                      hint: "Enter Your Name",
-                      mailController: userController,
-                    ),
-                    SizedBox(height: 20,),
-                    InputWithIcon(
                       icon: Icons.location_city_outlined,
                       hint: "Enter Your City",
-                      mailController: userController,
+                      mailController: cityController,
                     ),
                     SizedBox(height: 20,),
                     InputWithIcon(
                       icon: Icons.phone_android,
                       hint: "Enter Phone number",
-                      mailController: userController,
+                      mailController: numController,
                     ),
                     SizedBox(height: 20,),
                   ],
@@ -122,24 +128,20 @@ class _signupState extends State<signup> {
                 Padding(padding: const EdgeInsets.all(20)),
                 Column(
                   children: <Widget>[
-//                     GestureDetector(
-//                       onTap: () async {
-//                         setState(() {
-//                           circular = true;
-//                         });
-// //                        await checkUser();
-//                         await signMeUp();
-//                       },
-//                       child: circular ? CircularProgressIndicator() : PrimaryButton(
-//
-//                         btnText: "Create Account",
-//                       ),
-//                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: ProfilePic()));
+                      onTap: () async {
+                        setState(() {
+                          circular = true;
+                        });
+//                        await checkUser();
+                        await signMeUp();
+                        if(!circular)
+                          {
+                            Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: ProfilePic()));
+                          }
                       },
-                      child: PrimaryButton(
+                      child: circular ? CircularProgressIndicator() : PrimaryButton(
+
                         btnText: "Create Account",
                       ),
                     ),

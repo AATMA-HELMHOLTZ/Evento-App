@@ -1,13 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Screens/FadeAnimation.dart';
 import 'package:flutter_app/Widgets/Buttons.dart';
 import 'package:flutter_app/sidebar/sidebar_layout.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:page_transition/page_transition.dart';
-
-import 'login.dart';
 
 class ProfilePic extends StatefulWidget {
   @override

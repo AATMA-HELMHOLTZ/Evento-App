@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Screens/editProfile.dart';
 import 'package:flutter_app/Screens/onboarding.dart';
+import 'package:flutter_app/Screens/settingsPage.dart';
 import 'package:flutter_app/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -158,9 +159,14 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         indent: 32,
                         endIndent: 32,
                       ),
-                      MenuItem(
-                        icon: Icons.settings,
-                        title: "Settings",
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SettingsPage()));
+                        },
+                        child: MenuItem(
+                          icon: Icons.settings,
+                          title: "Settings",
+                        ),
                       ),
                       GestureDetector(
                         onTap: logMeOut,

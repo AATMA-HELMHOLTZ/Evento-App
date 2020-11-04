@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter_app/Screens/settingsPage.dart';
 import 'package:flutter_app/sidebar/sidebar_layout.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 
 class EditProfile extends StatefulWidget {
@@ -15,9 +18,116 @@ class _EditProfileState extends State<EditProfile> {
   final passController = TextEditingController();
   final cityController = TextEditingController();
   final numController = TextEditingController();
+  PickedFile imagefile = null;
+  final ImagePicker picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+    void takePhoto (ImageSource source) async{
+
+      final pickedfile = await picker.getImage(
+          source: source);
+      setState(() {
+        imagefile = pickedfile;
+      });
+    }
+    // ignore: non_constant_identifier_names
+    Widget BottomSheet()
+    {
+      return Container(
+        height: 100,
+        width: width,
+        margin: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 20
+        ),
+        child: Column(
+          children: [
+            Text("Choose your Profile Picture",style: TextStyle(fontSize: 20),),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FlatButton.icon(onPressed: (){
+                  takePhoto(ImageSource.camera);
+                },
+                    icon: Icon(
+                        Icons.camera_alt_rounded
+                    ), label: Text("Camera")),
+                FlatButton.icon(onPressed: (){
+                  takePhoto(ImageSource.gallery);
+                },
+                    icon: Icon(
+                        Icons.image
+                    ), label: Text("Gallery"))
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    // ignore: non_constant_identifier_names
+    Widget ImageProfile()
+    {
+      return Stack(
+        children: [
+          Container(
+            width: 130,
+            height: 130,
+            decoration: BoxDecoration(
+                boxShadow: [new BoxShadow(
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    color: Colors.black.withOpacity(0.1),
+                    offset: Offset(0,10)
+                )],
+                border: Border.all(
+                    width: 4,
+                    color: Color(0xFFB056674)
+                ),
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: imagefile == null ?
+                    AssetImage("assets/images/Anniversary.jpg") :
+                    FileImage(File(imagefile.path)),
+                    fit: BoxFit.cover
+                )
+            ),
+          ),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: (){
+                  //Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: ProfilePic()));
+                  showModalBottomSheet(
+                      context: context,
+                      builder: ((builder) => BottomSheet()));
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      color: Color(0xFFB056674),
+                      border: Border.all(
+                          width: 2,
+                          color: Colors.white
+                      ),
+                      shape: BoxShape.circle
+                  ),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.white,),
+                ),
+              ))
+        ],
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -30,6 +140,9 @@ class _EditProfileState extends State<EditProfile> {
          ),
         actions: [
           IconButton(
+            onPressed: (){
+              Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SettingsPage()));
+            },
             icon: Icon(Icons.settings),
             color: Color(0xFFB056674),
           ),
@@ -53,49 +166,7 @@ class _EditProfileState extends State<EditProfile> {
                   height: 15,
                 ),
                 Center(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                          boxShadow: [new BoxShadow(
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                            color: Colors.black.withOpacity(0.1),
-                            offset: Offset(0,10)
-                          )],
-                          border: Border.all(
-                            width: 4,
-                            color: Color(0xFFB056674)
-                          ),
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/Anniversary.jpg"),
-                            fit: BoxFit.cover
-                          )
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                          right: 0,
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFB056674),
-                              border: Border.all(
-                                  width: 2,
-                                  color: Colors.white
-                              ),
-                              shape: BoxShape.circle
-                              ),
-                             child: Icon(
-                                Icons.edit,
-                                color: Colors.white,),
-                          ))
-                    ],
-                  ),
+                  child: ImageProfile(),
                 ),
                 SizedBox(
                   height: 35,
@@ -186,3 +257,5 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 }
+
+

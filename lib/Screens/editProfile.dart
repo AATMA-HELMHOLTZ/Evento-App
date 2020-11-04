@@ -10,6 +10,12 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   bool showPassword = false;
+  final nameController = TextEditingController();
+  final mailController = TextEditingController();
+  final passController = TextEditingController();
+  final cityController = TextEditingController();
+  final numController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,23 +100,23 @@ class _EditProfileState extends State<EditProfile> {
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Full Name", "Tejas Hirawat", false),
+                buildTextField("Full Name", "Tejas Hirawat", false, nameController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Email Address", "apurva12@gmail.com", false),
+                buildTextField("Email Address", "apurva12@gmail.com", false, mailController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Password", "*******", true),
+                buildTextField("Password", "*******", true, passController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("City Name", "New Delhi", false),
+                buildTextField("City Name", "New Delhi", false, cityController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Phone Number", "99900883372",false),
+                buildTextField("Phone Number", "99900883372",false, numController),
                 SizedBox(
                   height: 35,
                 ),
@@ -152,7 +158,7 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-  TextField buildTextField(String labeltext, String placeHolder, bool ispasswordField)
+  TextField buildTextField(String labeltext, String placeHolder, bool ispasswordField, TextEditingController txtController)
   {
     return TextField(
       decoration: InputDecoration(
@@ -176,6 +182,7 @@ class _EditProfileState extends State<EditProfile> {
           )
       ),
       obscureText: ispasswordField ? showPassword : false,
+      controller: txtController,
     );
   }
 }

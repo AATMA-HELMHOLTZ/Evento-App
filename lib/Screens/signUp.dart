@@ -96,31 +96,36 @@ class _signupState extends State<signup> {
                     InputWithIcon(
                       icon: Icons.person_rounded,
                       hint: "Enter Your Name",
-                      mailController: nameController,
+                      Controller: nameController,
+                      isPasswordField: false,
                     ),
                     SizedBox(height: 20,),
                     InputWithIcon(
                       icon: Icons.email,
                       hint: "Enter Email...",
-                      mailController: emailController,
+                      Controller: emailController,
+                      isPasswordField: false,
                     ),
                     SizedBox(height: 20,),
-                    PassWithIcon(
+                    InputWithIcon(
                       icon: Icons.vpn_key,
                       hint: "Enter Password...",
-                      passwordController: passController,
+                      Controller: passController,
+                      isPasswordField: true,
                     ),
                     SizedBox(height: 20,),
                     InputWithIcon(
                       icon: Icons.location_city_outlined,
                       hint: "Enter Your City",
-                      mailController: cityController,
+                      Controller: cityController,
+                      isPasswordField: false,
                     ),
                     SizedBox(height: 20,),
                     InputWithIcon(
                       icon: Icons.phone_android,
                       hint: "Enter Phone number",
-                      mailController: numController,
+                      Controller: numController,
+                      isPasswordField: false,
                     ),
                     SizedBox(height: 20,),
                   ],
@@ -133,7 +138,7 @@ class _signupState extends State<signup> {
                         setState(() {
                           circular = true;
                         });
-//                        await checkUser();
+                       //await checkUser();
                         await signMeUp();
                         if(!circular)
                           {

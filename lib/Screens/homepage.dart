@@ -131,29 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: 20,
                   ),
-                  // Stack(
-                  //   children: <Widget>[
-                  //     // Stroked text as border.
-                  //     Text(
-                  //       'EVENTO',
-                  //       style: TextStyle(
-                  //         fontSize: 40,
-                  //         foreground: Paint()
-                  //           ..style = PaintingStyle.stroke
-                  //           ..strokeWidth = 4
-                  //           ..color = Colors.blue[700],
-                  //       ),
-                  //     ),
-                  //     // Solid text as fill.
-                  //     Text(
-                  //       'EVENTO',
-                  //       style: TextStyle(
-                  //         fontSize: 40,
-                  //         color: Colors.pinkAccent[300],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   Image.asset(
                       "assets/images/heading.gif",
                     height: 87,

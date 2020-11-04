@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/editProfile.dart';
 import 'package:flutter_app/Screens/onboarding.dart';
 import 'package:flutter_app/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'menu_item.dart';
@@ -89,24 +91,29 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                       SizedBox(
                         height: 100,
                       ),
-                      ListTile(
-                        title: Text(
-                          "Tejas Hirawat",
-                          style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),
-                        ),
-                        subtitle: Text(
-                          "www.MeanMachiNe.com",
-                          style: TextStyle(
-                            color: Color(0xFF1BB5FD),
-                            fontSize: 13,
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: EditProfile()));
+                        },
+                        child: ListTile(
+                          title: Text(
+                            "Tejas Hirawat",
+                            style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),
                           ),
-                        ),
-                        leading: CircleAvatar(
-                          child: Icon(
-                            Icons.perm_identity,
-                            color: Colors.white,
+                          subtitle: Text(
+                            "www.MeanMachiNe.com",
+                            style: TextStyle(
+                              color: Color(0xFF1BB5FD),
+                              fontSize: 13,
+                            ),
                           ),
-                          radius: 40,
+                          leading: CircleAvatar(
+                            child: Icon(
+                              Icons.perm_identity,
+                              color: Colors.white,
+                            ),
+                            radius: 40,
+                          ),
                         ),
                       ),
                       Divider(

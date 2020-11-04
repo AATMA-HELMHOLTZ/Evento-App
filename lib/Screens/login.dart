@@ -76,13 +76,15 @@ class _loginState extends State<login> {
                     InputWithIcon(
                       icon: Icons.email,
                       hint: "Enter Email...",
-                      mailController: userController,
+                      Controller: userController,
+                      isPasswordField: false,
                     ),
                     SizedBox(height: 20,),
-                    PassWithIcon(
+                    InputWithIcon(
                       icon: Icons.vpn_key,
                       hint: "Enter Password...",
-                      passwordController: passController,
+                      Controller: passController,
+                      isPasswordField: true,
                     ),
                     SizedBox(
                       height: 10,

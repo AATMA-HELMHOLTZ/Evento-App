@@ -6,7 +6,6 @@ import 'package:page_transition/page_transition.dart';
 import '../constants.dart';
 import 'moreTempltes.dart';
 
-
 class HomePage extends StatelessWidget with NavigationStates {
   @override
   Widget build(BuildContext context) {
@@ -42,9 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
       listItems.add(Container(
           height: 100,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0)), color: Colors.white, boxShadow: [
-            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-          ]),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+              ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Row(
@@ -55,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget>[
                     Text(
                       post["name"],
-                      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -77,8 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     getPostsData();
     controller.addListener(() {
-
-      double value = controller.offset/119;
+      double value = controller.offset / 119;
 
       setState(() {
         topContainer = value;
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final double categoryHeight = size.height*0.50;
+    final double categoryHeight = size.height * 0.50;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -109,15 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search, color: Colors.black),
-              onPressed: () {
-
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(Icons.grade, color: Colors.black),
-              onPressed: () {
-
-              },
+              onPressed: () {},
             )
           ],
         ),
@@ -132,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 20,
                   ),
                   Image.asset(
-                      "assets/images/heading.gif",
+                    "assets/images/heading.gif",
                     height: 87,
                     width: MediaQuery.of(context).size.width * 0.5,
                   ),
@@ -143,11 +141,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         "Delhi",
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25),
                       ),
                       IconButton(
                         icon: Icon(Icons.keyboard_arrow_down),
-                        onPressed: (){
+                        onPressed: () {
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => Search()));
                         },
                       )
@@ -160,12 +161,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 500),
-                opacity: closeTopContainer?0:1,
+                opacity: closeTopContainer ? 0 : 1,
                 child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    width: size.width ,
+                    width: size.width,
                     alignment: Alignment.topCenter,
-                    height: closeTopContainer?0:categoryHeight,
+                    height: closeTopContainer ? 0 : categoryHeight,
                     child: categoriesScroller),
               ),
               Expanded(
@@ -184,13 +185,18 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
                         }
                         return GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, PageTransition(type: PageTransitionType.topToBottom, child: IndividualSearch()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.topToBottom,
+                                    child: IndividualSearch()));
                           },
                           child: Opacity(
                             opacity: scale,
                             child: Transform(
-                              transform:  Matrix4.identity()..scale(scale,scale),
+                              transform: Matrix4.identity()
+                                ..scale(scale, scale),
                               alignment: Alignment.bottomCenter,
                               child: Align(
                                   heightFactor: 0.7,
@@ -213,7 +219,7 @@ class CategoriesScroller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double categoryHeight = MediaQuery.of(context).size.height * 0.50 ;
+    final double categoryHeight = MediaQuery.of(context).size.height * 0.50;
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -228,14 +234,12 @@ class CategoriesScroller extends StatelessWidget {
                 width: 250,
                 margin: EdgeInsets.only(right: 20),
                 height: categoryHeight,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/Anniversary.jpg"),
-                  fit: BoxFit.cover,
-                ),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))
-              ),
-
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/Anniversary.jpg"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -246,7 +250,10 @@ class CategoriesScroller extends StatelessWidget {
                       ),
                       Text(
                         "Anniversary\nParty",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -264,9 +271,7 @@ class CategoriesScroller extends StatelessWidget {
                       image: AssetImage("assets/images/venue.jpg"),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))
-                ),
-
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -277,7 +282,10 @@ class CategoriesScroller extends StatelessWidget {
                       ),
                       Text(
                         "Marriage\nParty",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -295,9 +303,7 @@ class CategoriesScroller extends StatelessWidget {
                       image: AssetImage("assets/images/bday.jpg"),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))
-                ),
-
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -308,7 +314,10 @@ class CategoriesScroller extends StatelessWidget {
                       ),
                       Text(
                         "Birthday\nParty",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -318,9 +327,9 @@ class CategoriesScroller extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: ()
-                {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MoreTemp()));
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MoreTemp()));
                 },
                 child: Container(
                   width: 250,
@@ -331,9 +340,7 @@ class CategoriesScroller extends StatelessWidget {
                         image: AssetImage("assets/images/manymore.jpg"),
                         fit: BoxFit.cover,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))
-                  ),
-
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
@@ -344,7 +351,10 @@ class CategoriesScroller extends StatelessWidget {
                         ),
                         Text(
                           "Click\nTo\nContinue",
-                          style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           height: 10,

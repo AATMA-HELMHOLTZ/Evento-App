@@ -28,7 +28,6 @@ dependencies:
   cupertino_icons: ^0.1.3
   page_transition: ^1.1.7+2
   flutter_bloc: ^2.1.1
-  flutter_staggered_grid_view:
   http:
   logger:
   flutter_secure_storage:

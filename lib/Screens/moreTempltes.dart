@@ -1,59 +1,102 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
-  const StaggeredTile.count(5, 2),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 2),
-  const StaggeredTile.count(2, 2),
-];
-
-List<Widget> _tiles = <Widget>[
-  _Example01Tile("assets/images/3.jpg"),
-  _ExampleTile("assets/images/2.jpg"),
-  _ExampleTile("assets/images/1.jpg"),
-  _ExampleTile("assets/images/2.jpg"),
-  _ExampleTile("assets/images/1.jpg"),
-  _ExampleTile("assets/images/2.jpg"),
-  _ExampleTile("assets/images/1.jpg"),
-  _ExampleTile("assets/images/2.jpg"),
-  _ExampleTile("assets/images/1.jpg"),
-  _ExampleTile("assets/images/2.jpg"),
-  // const _Example01Tile(Colors.lightBlue, Icons.wifi),
-  // const _Example01Tile(Colors.amber, Icons.panorama_wide_angle),
-  // const _Example01Tile(Colors.brown, Icons.map),
-  // const _Example01Tile(Colors.deepOrange, Icons.send),
-  // const _Example01Tile(Colors.indigo, Icons.airline_seat_flat),
-  // const _Example01Tile(Colors.red, Icons.bluetooth),
-  // const _Example01Tile(Colors.pink, Icons.battery_alert),
-  // const _Example01Tile(Colors.purple, Icons.desktop_windows),
-  // const _Example01Tile(Colors.blue, Icons.radio),
-];
+// List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
+//   const StaggeredTile.count(5, 2),
+//   const StaggeredTile.count(2, 2),
+//   const StaggeredTile.count(2, 2),
+//   const StaggeredTile.count(2, 2),
+//   const StaggeredTile.count(2, 2),
+//   const StaggeredTile.count(1, 2),
+//   const StaggeredTile.count(1, 2),
+//   const StaggeredTile.count(2, 2),
+//   const StaggeredTile.count(2, 2),
+//   const StaggeredTile.count(2, 2),
+// ];
+//
+// List<Widget> _tiles = <Widget>[
+//   _Example01Tile("assets/images/3.jpg"),
+//   _ExampleTile("assets/images/2.jpg"),
+//   _ExampleTile("assets/images/1.jpg"),
+//   _ExampleTile("assets/images/2.jpg"),
+//   _ExampleTile("assets/images/1.jpg"),
+//   _ExampleTile("assets/images/2.jpg"),
+//   _ExampleTile("assets/images/1.jpg"),
+//   _ExampleTile("assets/images/2.jpg"),
+//   _ExampleTile("assets/images/1.jpg"),
+//   _ExampleTile("assets/images/2.jpg"),
+//   // const _Example01Tile(Colors.lightBlue, Icons.wifi),
+//   // const _Example01Tile(Colors.amber, Icons.panorama_wide_angle),
+//   // const _Example01Tile(Colors.brown, Icons.map),
+//   // const _Example01Tile(Colors.deepOrange, Icons.send),
+//   // const _Example01Tile(Colors.indigo, Icons.airline_seat_flat),
+//   // const _Example01Tile(Colors.red, Icons.bluetooth),
+//   // const _Example01Tile(Colors.pink, Icons.battery_alert),
+//   // const _Example01Tile(Colors.purple, Icons.desktop_windows),
+//   // const _Example01Tile(Colors.blue, Icons.radio),
+// ];
 
 
 class MoreTemp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    List templates = [
+      'Anniversary', 'Birthday Party','Marriage Functions '
+    ];
     return new Scaffold(
         appBar: new AppBar(
           title: new Text('Templates'),
+          backgroundColor: Color(0xFFB056674),
         ),
-        body: new Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: new StaggeredGridView.count(
-              crossAxisCount: 4,
-              staggeredTiles: _staggeredTiles,
-              children: _tiles,
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-              padding: const EdgeInsets.all(4.0),
-            )));
+        body: Container(
+          child: GridView.builder(
+            itemCount: templates.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              // ignore: missing_return
+              itemBuilder: (context,index){
+                return Card(
+                  child: Hero(
+                      tag: templates[index],
+                      child: Material(
+                        child: InkWell(
+                          child: GridTile(
+                            footer: Container(
+                              color: Colors.white,
+                              child: ListTile(
+                                leading: Text(templates[index],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black
+                                ),),
+                                trailing: IconButton(
+                                  onPressed: (){
+
+                                  },
+                                  icon: Icon(Icons.chevron_right),
+                                  color: Color(0xFFB056674),
+                                  autofocus: true,
+                                ),
+                              ),
+                            ),
+                              child: Image.asset("assets/images/Anniversary.jpg",fit: BoxFit.cover,)
+                          ),
+                        ),
+                      )),
+                );
+              }),
+        ),
+        // body: new Padding(
+        //     padding: const EdgeInsets.only(top: 12.0),
+        //     child: new StaggeredGridView.count(
+        //       crossAxisCount: 4,
+        //       staggeredTiles: _staggeredTiles,
+        //       children: _tiles,
+        //       mainAxisSpacing: 4.0,
+        //       crossAxisSpacing: 4.0,
+        //       padding: const EdgeInsets.all(4.0),
+        //     )));
+    );
   }
 }
 

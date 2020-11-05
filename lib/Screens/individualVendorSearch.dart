@@ -23,6 +23,7 @@ class _IndividualSearchState extends State<IndividualSearch> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Vendors"),
+        backgroundColor: Color(0xFFB056674),
       ),
       body: _myListView(context),
     );
@@ -54,7 +55,7 @@ Widget _myListView(BuildContext context) {
               height: 150,
               width: width,
               decoration: BoxDecoration(
-                color: Colors.black12,
+                color: Color(0xFFB056674).withOpacity(.5),
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
               child: Row(
@@ -73,13 +74,16 @@ Widget _myListView(BuildContext context) {
                           child: Text("Vendor",
                             style: TextStyle(
                               fontSize: 30,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                             ),),
                         ),
-                        Text("Vendor Ratings, Team size, wagera wagera",
+                        Text("Vendor Ratings -- 4.5 \n"
+                            "\n Experience -- (6)",
                           style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black.withOpacity(0.8)
+                              fontSize: 15,
+                              color: Colors.teal,
+                            backgroundColor: Colors.white,
                           ),)
                       ],
                     ),

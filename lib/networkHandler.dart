@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class NetworkHandler {
-  String baseurl = "https://evento-backend-app.herokuapp.com/";
+  String baseurl = "https://evento-backend-app.herokuapp.com";
   // Hereko link  localhost:5000/api/v1/user/signup
 
   var log = Logger();

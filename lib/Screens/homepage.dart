@@ -22,6 +22,8 @@ class HomePage extends StatelessWidget with NavigationStates {
 }
 
 class MyHomePage extends StatefulWidget {
+
+  MyHomePage({Key key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -33,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double topContainer = 0;
 
   List<Widget> itemsData = [];
+
+  String dropdownValue = 'Delhi';
 
   void getPostsData() {
     List<dynamic> responseList = FOOD_DATA;
@@ -137,23 +141,47 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: 50,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "Delhi",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        onPressed: () {
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => Search()));
-                        },
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Text(
+                  //       "Delhi",
+                  //       style: TextStyle(
+                  //           color: Colors.black,
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 25),
+                  //     ),
+                  //     IconButton(
+                  //       icon: Icon(Icons.keyboard_arrow_down),
+                  //       onPressed: () {
+                  //         //Navigator.push(context, MaterialPageRoute(builder: (context) => Search()));
+                  //       },
+                  //     )
+                  //   ],
+                  // ),
+                DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 20,
+                    elevation: 16,
+                    style: TextStyle(
+                        color: Colors.black,
+                      fontSize: 22
+                    ),
+                    underline: Container(
+                    height: 2,
+                    color: Color(0xFFB056674),
+                    ),
+                    onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    } );
+                  },
+                  items: <String>['Delhi', 'Mumbai', 'Chennai', 'Kolkata', 'Banglore'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                     );}).toList(),
+          )
                 ],
               ),
               const SizedBox(

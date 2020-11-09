@@ -23,21 +23,12 @@ const FOOD_DATA = [
     "image":"bakery.png"
   },
   {
-    "name":"Pizza",
-    "brand":"Dominos",
-    "price":17.99,
-    "image":"pizza.png"
+    "name":"Musical Bands",
+    "image":"band.png"
   },
   {
-    "name":"Sandwich",
-    "brand":"Hawkers",
-    "price":2.99,
-    "image":"sandwich.png"
+    "name":"Hospitality Services",
+    "image":"Hospitality.png"
   },
-  {
-    "name":"Wrap",
-    "brand":"Subway",
-    "price":6.99,
-    "image":"wrap.png"
-  }
+
 ];

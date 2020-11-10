@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/Screens/profilePic.dart';
 import 'package:flutter_app/Widgets/Buttons.dart';
 import 'package:flutter_app/Widgets/InputField.dart';
-import 'package:flutter_app/networkHandler.dart';
+import 'file:///C:/Users/Apurva%20Bhardwaj/Android%20studio%20Projects/Evento-App/lib/Services/networkHandler.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'login.dart';

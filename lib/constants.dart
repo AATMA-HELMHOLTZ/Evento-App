@@ -27,7 +27,7 @@ const FOOD_DATA = [
     "image":"band.png"
   },
   {
-    "name":"Hospitality Services",
+    "name":"Hospitality",
     "image":"Hospitality.png"
   },
 

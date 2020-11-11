@@ -24,6 +24,7 @@ class _loginState extends State<login> {
   bool validate = false;
   bool circular = false;
   bool result = false;
+  String type = 'error';
   String errorText;
 
   logMeIn() async {
@@ -138,7 +139,7 @@ class _loginState extends State<login> {
                                   (route)=>false );
                         }
                         else{
-                          _onAlertButtonPressed(context);
+                          _onButtonError(context);
                         };
 
                       },
@@ -170,7 +171,7 @@ class _loginState extends State<login> {
   }
 }
 //Alert Dialog box
-_onAlertButtonPressed(context) {
+_onButtonError(context) {
   Alert(
     context: context,
     type: AlertType.error,

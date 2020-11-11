@@ -8,6 +8,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../Services/networkHandler.dart';
 import 'signUp.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class login extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _loginState extends State<login> {
   final storage = new FlutterSecureStorage();
   bool validate = false;
   bool circular = false;
+  bool result = false;
   String errorText;
 
   logMeIn() async {
@@ -42,8 +44,7 @@ class _loginState extends State<login> {
         circular = false;
       });
     } else {
-      print("herererJHSDFH");
-      
+      result=true;
       setState(() {
         validate = false;
         errorText = "Incorrect email/password combination";
@@ -135,7 +136,11 @@ class _loginState extends State<login> {
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(builder: (context) => SideBarLayout()),
                                   (route)=>false );
+                        }
+                        else{
+                          _onAlertButtonPressed(context);
                         };
+
                       },
                       child: circular ? CircularProgressIndicator() : PrimaryButton (
                         btnText: "Login",
@@ -164,3 +169,26 @@ class _loginState extends State<login> {
     );
   }
 }
+//Alert Dialog box
+_onAlertButtonPressed(context) {
+  Alert(
+    context: context,
+    type: AlertType.error,
+    title: "Login Failed",
+    desc: "Try Again with correct credentials",
+    buttons: [
+      DialogButton(
+        child: Text(
+          "Login",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => login(),
+          ),
+        ),
+        width: 120,
+      )
+    ],
+  ).show();}

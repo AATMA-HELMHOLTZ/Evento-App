@@ -145,7 +145,7 @@ class _IndividualSearchState extends State<IndividualSearch> {
                                 icon: Icon(Icons.arrow_forward_ios),
                                 label: Text("Know more")),
                             FlatButton.icon(onPressed: () {
-                              //mailRequest(vendors[index]['_id']);
+                              mailRequest(vendors[index]['_id']);
                               Navigator.push(context, PageTransition(
                               type: PageTransitionType.bottomToTop,
                               child: SideBarLayout()));

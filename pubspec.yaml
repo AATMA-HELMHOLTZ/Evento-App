@@ -40,6 +40,7 @@ dependencies:
   fancy_shimmer_image:
   flutter_webview_plugin: ^0.3.11
   rating_bar: ^0.2.0
+  fab_circular_menu: ^1.0.1
 
 dev_dependencies:
   flutter_test:

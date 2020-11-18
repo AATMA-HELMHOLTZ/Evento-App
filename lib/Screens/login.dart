@@ -29,7 +29,7 @@ class _loginState extends State<login> {
 
   logMeIn() async {
     Map<String, String> data = {
-      "email": userController.text,
+      "username": userController.text,
       "password": passController.text,
     };
     var response = await networkHandler.post("/api/v1/user/login", data);

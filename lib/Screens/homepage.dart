@@ -1,9 +1,13 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Models/user.dart';
 import 'package:flutter_app/Screens/individualVendorSearch.dart';
 import 'package:flutter_app/Screens/templateView.dart';
+import 'package:flutter_app/Services/networkHandler.dart';
 import 'package:flutter_app/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shimmer/shimmer.dart';
 import '../constants.dart';
 import 'moreTempltes.dart';
 
@@ -21,8 +25,9 @@ class HomePage extends StatelessWidget with NavigationStates {
     );
   }
 }
-
+String a;
 class MyHomePage extends StatefulWidget {
+
 
   MyHomePage({Key key}) : super(key: key);
   @override
@@ -30,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final CategoriesScroller categoriesScroller = CategoriesScroller();
+
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
@@ -39,10 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String dropdownValue = 'Delhi';
 
+  CategoriesScroller categoriesScroller = CategoriesScroller();
   void getPostsData() {
     List<dynamic> responseList = FOOD_DATA;
     List<Widget> listItems = [];
     responseList.forEach((post) {
+      //a = post['name'];
+      //getService(post['name']);
       listItems.add(Container(
           height: 100,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -57,15 +65,20 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      post["name"],
-                      style: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, PageTransition( type: PageTransitionType.topToBottom, child: IndividualSearch(name: post['name'],)));
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        post["name"],
+                        style: const TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
                 Image.asset(
                   "assets/images/${post["image"]}",
@@ -84,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getPostsData();
+
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -142,23 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: 50,
                   ),
-                  // Row(
-                  //   children: [
-                  //     Text(
-                  //       "Delhi",
-                  //       style: TextStyle(
-                  //           color: Colors.black,
-                  //           fontWeight: FontWeight.bold,
-                  //           fontSize: 25),
-                  //     ),
-                  //     IconButton(
-                  //       icon: Icon(Icons.keyboard_arrow_down),
-                  //       onPressed: () {
-                  //         //Navigator.push(context, MaterialPageRoute(builder: (context) => Search()));
-                  //       },
-                  //     )
-                  //   ],
-                  // ),
+
                 DropdownButton<String>(
                     value: dropdownValue,
                     icon: Icon(Icons.arrow_downward),
@@ -177,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dropdownValue = newValue;
                     } );
                   },
-                  items: <String>['Delhi', 'Mumbai', 'Chennai', 'Kolkata', 'Banglore'].map<DropdownMenuItem<String>>((String value) {
+                  items: <String>['Delhi', 'Mumbai', 'Chennai', 'Kolkata', 'Bangalore'].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -213,25 +211,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             scale = 1;
                           }
                         }
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.topToBottom,
-                                    child: IndividualSearch()));
-                          },
-                          child: Opacity(
-                            opacity: scale,
-                            child: Transform(
-                              transform: Matrix4.identity()
-                                ..scale(scale, scale),
-                              alignment: Alignment.bottomCenter,
-                              child: Align(
-                                  heightFactor: 0.7,
-                                  alignment: Alignment.topCenter,
-                                  child: itemsData[index]),
-                            ),
+                        return Opacity(
+                          opacity: scale,
+                          child: Transform(
+                            transform: Matrix4.identity()
+                              ..scale(scale, scale),
+                            alignment: Alignment.bottomCenter,
+                            child: Align(
+                                heightFactor: 0.7,
+                                alignment: Alignment.topCenter,
+                                child: itemsData[index]),
                           ),
                         );
                       })),
@@ -243,12 +232,39 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class CategoriesScroller extends StatelessWidget {
-  const CategoriesScroller();
+class CategoriesScroller extends StatefulWidget {
 
+  CategoriesScroller();
+
+  @override
+  _CategoriesScrollerState createState() => _CategoriesScrollerState();
+}
+
+class _CategoriesScrollerState extends State<CategoriesScroller> {
+  List events;
+  NetworkHandler networkHandler = NetworkHandler();
+  var response;
+
+  void fetchData() async {
+    response = await networkHandler.get('/events/get/getEvents');
+    print(response);
+    response = response['events'];
+    print(response);
+    setState(() {
+      events = response;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
   @override
   Widget build(BuildContext context) {
     final double categoryHeight = MediaQuery.of(context).size.height * 0.50;
+    //print(events[0]['image']);
+
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -259,7 +275,40 @@ class CategoriesScroller extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Row(
             children: <Widget>[
-              GestureDetector(
+              events == null ? Shimmer.fromColors(
+                baseColor: Colors.black87,
+                highlightColor: Colors.white,
+                child: Container(
+                  width: 250,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    boxShadow: [
+                      BoxShadow(
+                        //color: Colors.grey,
+                        blurRadius: 2.0, // soften the shadow
+                        //spreadRadius: 5.0, //extend the shadow
+                        offset: Offset(
+                          15.0, // Move to right 10  horizontally
+                          15.0, // Move to bottom 10 Vertically
+                        ),
+                      )
+                    ],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Center(
+                    child: Text(
+                      'Loading',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight:
+                        FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ): GestureDetector(
                 onTap: (){
                   Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ColorList()));
                 },
@@ -269,7 +318,7 @@ class CategoriesScroller extends StatelessWidget {
                   height: categoryHeight,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/Anniversary.jpg"),
+                        image: NetworkImage(events[0]['image']),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -282,9 +331,9 @@ class CategoriesScroller extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          "Anniversary\nParty",
+                          events[0] == null ? 'a' : events[0]['nameOfEvent'],
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 40,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -296,13 +345,45 @@ class CategoriesScroller extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
+              events == null ? Shimmer.fromColors(
+                baseColor: Colors.black87,
+                highlightColor: Colors.white,
+                child: Container(
+                  width: 250,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.red,
+                        blurRadius: 25.0, // soften the shadow
+                        spreadRadius: 5.0, //extend the shadow
+                        offset: Offset(
+                          15.0, // Move to right 10  horizontally
+                          15.0, // Move to bottom 10 Vertically
+                        ),
+                      )
+                    ],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Center(
+                    child: Text(
+                      'Loading',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight:
+                        FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ): Container(
                 width: 250,
                 margin: EdgeInsets.only(right: 20),
                 height: categoryHeight,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/venue.jpg"),
+                      image: NetworkImage(events[1]['image']),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -315,9 +396,9 @@ class CategoriesScroller extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "Marriage\nParty",
+                        events == null ? 'a' : events[1]['nameOfEvent'],
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 40,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
@@ -328,13 +409,45 @@ class CategoriesScroller extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
+              events == null ? Shimmer.fromColors(
+                baseColor: Colors.black87,
+                highlightColor: Colors.white,
+                child: Container(
+                  width: 250,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.red,
+                        blurRadius: 25.0, // soften the shadow
+                        spreadRadius: 5.0, //extend the shadow
+                        offset: Offset(
+                          15.0, // Move to right 10  horizontally
+                          15.0, // Move to bottom 10 Vertically
+                        ),
+                      )
+                    ],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Center(
+                    child: Text(
+                      'Loading',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight:
+                        FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ): Container(
                 width: 250,
                 margin: EdgeInsets.only(right: 20),
                 height: categoryHeight,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/bday.jpg"),
+                      image: NetworkImage(events[2]['image']),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -347,9 +460,9 @@ class CategoriesScroller extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "Birthday\nParty",
+                        events[2]['nameOfEvent'],
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 40,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
@@ -370,10 +483,15 @@ class CategoriesScroller extends StatelessWidget {
                   margin: EdgeInsets.only(right: 20),
                   height: categoryHeight,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/manymore.jpg"),
-                        fit: BoxFit.cover,
-                      ),
+                      // image: DecorationImage(
+                      //   image: NetworkImage(events[3]['image']),
+                      //   fit: BoxFit.cover,
+                      // ),
+                    gradient: LinearGradient(
+                        colors: [
+                          const Color(0xFFff4d12),
+                          const Color(0xFFe6c81e),
+                        ],),
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -381,14 +499,17 @@ class CategoriesScroller extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          height: 10,
+                          height: 140,
                         ),
-                        Text(
-                          "Click\nTo\nContinue",
-                          style: TextStyle(
-                              fontSize: 40,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                        Center(
+                          child: Text(
+                            "More \n Templates",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(
                           height: 10,

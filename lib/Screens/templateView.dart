@@ -55,10 +55,15 @@
 // }
 // //Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: VendorProfile()));
 
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Services/networkHandler.dart';
+import 'package:flutter_app/sidebar/sidebar_layout.dart';
+import 'package:page_transition/page_transition.dart';
+
+bool checked = false;
+bool selected = false;
+String title;
 
 class ColorList extends StatefulWidget {
   @override
@@ -71,16 +76,32 @@ class _ColorListState extends State<ColorList> {
 
   // there are fewer accents than primaries
   final _colorCount = Colors.primaries.length - 3.0;
+  List events;
+  NetworkHandler networkHandler = NetworkHandler();
+  var response;
+
+  void fetchData() async {
+    response = await networkHandler.get('/events/get/getEvents');
+    print(response);
+    response = response['events'];
+    print(response);
+    setState(() {
+      events = response;
+    });
+  }
 
   @override
   void initState() {
     _activeColorNotifier = ValueNotifier(0);
     _checkColorNotifier = ValueNotifier(0);
     super.initState();
+    fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Template"),
@@ -89,14 +110,72 @@ class _ColorListState extends State<ColorList> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-
+            SizedBox(height: 20,),
+            Center(
+              child: Card(
+                child: Container(
+                  width: width - 20,
+                  height: 150,
+                  child: Center(
+                      child: CheckboxListTile(
+                        title: Text('Select All',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        ),),
+                        value: checked,
+                        activeColor: Colors.white,
+                        checkColor: Color(0xFFB056674),
+                        onChanged: (bool value) {
+                          setState(() {
+                            checked = value;
+                            selected = value;
+                          });
+                        },
+                        selected: selected,
+                        secondary: IconButton(
+                            icon: Icon(Icons.outgoing_mail),
+                            color: Colors.white,
+                            onPressed: (){
+                              Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SideBarLayout()));
+                            }),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFB056674),
+                      border: Border.all(
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 4,
                 itemBuilder: (context, index) {
-                  return CheckItem(
-                    // activeNotifier: _activeColorNotifier,
-                    // checkNotifier: _checkColorNotifier,
+                  return Container(
+                    height: 100,
+                    child: CheckboxListTile(
+                      title: Text(events[1]['servicesOffered'][index]),
+                      value: checked,
+                      activeColor: Color(0xFFB056674),
+                      checkColor: Colors.white,
+                      onChanged: (bool value) {
+                        setState(() {
+                          checked = value;
+                          selected = value;
+                        });
+                      },
+                      selected: selected,
+                      secondary: CircleAvatar(
+                        backgroundImage: AssetImage("assets/images/Anniversary.jpg"),
+                        radius: 40,
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
                   );
                 },
               ),
@@ -109,56 +188,38 @@ class _ColorListState extends State<ColorList> {
 }
 
 class CheckItem extends StatefulWidget {
-  // final ValueNotifier activeNotifier;
-  // final ValueNotifier checkNotifier;
-
+  // bool checked;
+  // bool selected;
+  //
   // CheckItem(
-  //     {Key key, @required this.activeNotifier, @required this.checkNotifier})
-  //     : super(key: key);
+  //     this.checked,
+  //     this.selected
+  //     )
 
   @override
   _CheckItemState createState() => _CheckItemState();
 }
 
 class _CheckItemState extends State<CheckItem> {
-  bool _checked = false;
-  bool _selected = false;
-  //
-  // Color _activeColor = Colors.green;
-  // Color _checkColor = Colors.black;
-  //
-  // @override
-  // void initState() {
-  //   widget.checkNotifier.addListener(() {
-  //     setState(() {
-  //       _checkColor = Colors.primaries[widget.checkNotifier.value];
-  //     });
-  //   });
-  //
-  //   widget.activeNotifier.addListener(() {
-  //     setState(() {
-  //       _activeColor = Colors.primaries[widget.activeNotifier.value];
-  //     });
-  //   });
-  //
-  //   super.initState();
-  // }
+
+  //CheckItem checkItem = CheckItem(checked, selected);
+
 
   Widget build(BuildContext context) {
     return Container(
       height: 100,
       child: CheckboxListTile(
-        title: Text('Check! Mate?'),
-        value: _checked,
+        title: Text(''),
+        value: checked,
         activeColor: Color(0xFFB056674),
         checkColor: Colors.white,
         onChanged: (bool value) {
           setState(() {
-            _checked = value;
-            _selected = value;
+            checked = value;
+            selected = value;
           });
         },
-        selected: _selected,
+        selected: selected,
         secondary: CircleAvatar(
           backgroundImage: AssetImage("assets/images/Anniversary.jpg"),
           radius: 40,

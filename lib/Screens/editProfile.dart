@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Models/user.dart';
+//import 'dart:io';
 import 'dart:io';
 import 'package:flutter_app/Screens/settingsPage.dart';
+import 'package:flutter_app/Services/networkHandler.dart';
 import 'package:flutter_app/sidebar/sidebar_layout.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
@@ -20,6 +23,23 @@ class _EditProfileState extends State<EditProfile> {
   final numController = TextEditingController();
   PickedFile imagefile = null;
   final ImagePicker picker = ImagePicker();
+
+  NetworkHandler networkHandler = NetworkHandler();
+  ProfileModel profileModel = ProfileModel();
+  @override
+  void initState() {
+    super.initState();
+
+    fetchData();
+  }
+
+  void fetchData() async {
+    var response = await networkHandler.get("/api/v1/user/get");
+    setState(() {
+      profileModel = ProfileModel.fromJson(response["data"]);
+      //circular = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +112,10 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: imagefile == null ?
-                    AssetImage("assets/images/Anniversary.jpg") :
-                    FileImage(File(imagefile.path)),
+                    image: AssetImage("assets/images/Anniversary.jpg"),
+                    // imagefile == null ?
+                    // AssetImage("assets/images/Anniversary.jpg") :
+                    // FileImage(File(imagefile.path)),
                     fit: BoxFit.cover
                 )
             ),
@@ -171,23 +192,23 @@ class _EditProfileState extends State<EditProfile> {
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Full Name", "Tejas Hirawat", false, nameController),
+                buildTextField("Full Name", profileModel.name, false, nameController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Email Address", "apurva12@gmail.com", false, mailController),
+                buildTextField("Email Address", profileModel.username, false, mailController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Password", "*******", true, passController),
+                buildTextField("Password", '*********', true, passController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("City Name", "New Delhi", false, cityController),
+                buildTextField("City Name", profileModel.city, false, cityController),
                 SizedBox(
                   height: 35,
                 ),
-                buildTextField("Phone Number", "99900883372",false, numController),
+                buildTextField("Phone Number", profileModel.mobile.toString(),false, numController),
                 SizedBox(
                   height: 35,
                 ),
@@ -206,7 +227,9 @@ class _EditProfileState extends State<EditProfile> {
                               color: Colors.black)),
                     ),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SideBarLayout()));
+                      },
                       color: Color(0xFFB056674),
                       padding: EdgeInsets.symmetric(horizontal: 50),
                       elevation: 2,

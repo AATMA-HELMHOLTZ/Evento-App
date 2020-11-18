@@ -1,29 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Services/networkHandler.dart';
 import 'FadeAnimation.dart';
 
 class VendorProfile extends StatefulWidget {
+
+  String name;
+  int index;
+  VendorProfile({Key key, @required this.name, @required this.index}): super(key: key);
   @override
-  _VendorProfileState createState() => _VendorProfileState();
+  _VendorProfileState createState() => _VendorProfileState(name,index);
 }
 
 class _VendorProfileState extends State<VendorProfile> {
+
+  _VendorProfileState(this.name, this.index);
+
+  String name;
+  int index;
+  List vendors;
+  NetworkHandler networkHandler = NetworkHandler();
+  var response;
+  void fetchData() async {
+    response = await networkHandler.get('/vendors/get/$name');
+    response = response['vendors'];
+    setState(() {
+      vendors = response;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
                 expandedHeight: 450,
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.white,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.pin,
                   background: Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/emma.jpg'),
+                            image: NetworkImage(vendors == null ? 'https://cdn.hashnode.com/res/hashnode/image/upload/v1594645715165/q01-kk5fR.png' : vendors[index]['images'][1]),
                             fit: BoxFit.cover
                         )
                     ),
@@ -43,19 +69,19 @@ class _VendorProfileState extends State<VendorProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            FadeAnimation(1, Text("Emma Watson", style:
+                            FadeAnimation(1, Text(vendors == null ? 'Vendor' : vendors[index]['name'], style:
                             TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40)
                               ,)),
                             SizedBox(height: 20,),
                             Row(
                               children: <Widget>[
                                 FadeAnimation(1.2,
-                                    Text("60 Videos", style: TextStyle(color: Colors.grey, fontSize: 16),)
+                                    Text(vendors[index]['service'], style: TextStyle(color: Colors.white70, fontSize: 16),)
                                 ),
                                 SizedBox(width: 50,),
-                                FadeAnimation(1.3, Text("240K Subscribers", style:
-                                TextStyle(color: Colors.grey, fontSize: 16)
-                                  ,))
+                                // FadeAnimation(1.3, Text(vendors[index]['service'], style:
+                                // TextStyle(color: Colors.grey, fontSize: 16)
+                                //   ,))
                               ],
                             )
                           ],
@@ -72,27 +98,35 @@ class _VendorProfileState extends State<VendorProfile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        FadeAnimation(1.6, Text("Emma Charlotte Duerre Watson was born in Paris, France, to English parents, Jacqueline Luesby and Chris Watson, both lawyers. She moved to Oxfordshire when she was five, where she attended the Dragon School.",
-                          style: TextStyle(color: Colors.grey, height: 1.4),)),
+                        FadeAnimation(1.6, Text(vendors[index]['description'],
+                          style: TextStyle(color: Colors.black, height: 1.4),)),
                         SizedBox(height: 40,),
                         FadeAnimation(1.6,
-                            Text("Born", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                            Text("City", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)
                         ),
                         SizedBox(height: 10,),
                         FadeAnimation(1.6,
-                            Text("April, 15th 1990, Paris, France", style: TextStyle(color: Colors.grey),)
+                            Text(vendors[index]['city'], style: TextStyle(color: Colors.black),)
                         ),
                         SizedBox(height: 20,),
                         FadeAnimation(1.6,
-                            Text("Nationality", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                            Text("Minimum Pricing", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)
                         ),
                         SizedBox(height: 10,),
                         FadeAnimation(1.6,
-                            Text("British", style: TextStyle(color: Colors.grey),)
+                            Text(vendors[index]['minPrice'].toString() + '  Onwards', style: TextStyle(color: Colors.black),)
                         ),
                         SizedBox(height: 20,),
                         FadeAnimation(1.6,
-                            Text("Videos", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                            Text("Contact Details", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)
+                        ),
+                        SizedBox(height: 10,),
+                        FadeAnimation(1.6,
+                            Text(vendors[index]['email'] + ' , ' + vendors[index]['number'].toString(), style: TextStyle(color: Colors.black),)
+                        ),
+                        SizedBox(height: 20,),
+                        FadeAnimation(1.6,
+                            Text("Gallery", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),)
                         ),
                         SizedBox(height: 20,),
                         FadeAnimation(1.8, Container(
@@ -100,9 +134,9 @@ class _VendorProfileState extends State<VendorProfile> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
-                              makeVideo(image: 'assets/images/emma-1.jpg'),
-                              makeVideo(image: 'assets/images/emma-2.jpg'),
-                              makeVideo(image: 'assets/images/emma-3.jpg'),
+                              makeVideo(image: vendors[index]['images'][0]),
+                              makeVideo(image: vendors[index]['images'][1]),
+                              makeVideo(image: vendors[index]['images'][2]),
                             ],
                           ),
                         )),
@@ -125,9 +159,9 @@ class _VendorProfileState extends State<VendorProfile> {
                     height: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Colors.yellow[700]
+                        color: Color(0xFFB056674)
                     ),
-                    child: Align(child: Text("Follow", style: TextStyle(color: Colors.white),)),
+                    child: Align(child: Text("Contact the Vendor", style: TextStyle(color: Colors.white),)),
                   ),
                 ),
               ),
@@ -146,7 +180,7 @@ class _VendorProfileState extends State<VendorProfile> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
-                image: AssetImage(image),
+                image: NetworkImage(image),
                 fit: BoxFit.cover
             )
         ),
@@ -159,9 +193,6 @@ class _VendorProfileState extends State<VendorProfile> {
                     Colors.black.withOpacity(.3)
                   ]
               )
-          ),
-          child: Align(
-            child: Icon(Icons.play_arrow, color: Colors.white, size: 70,),
           ),
         ),
       ),

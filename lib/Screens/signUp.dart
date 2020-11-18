@@ -15,7 +15,7 @@ class signup extends StatefulWidget {
 class _signupState extends State<signup> {
 
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passController = TextEditingController();
   final cityController = TextEditingController();
   final numController = TextEditingController();
@@ -27,7 +27,7 @@ class _signupState extends State<signup> {
   final formKey = GlobalKey<FormState>();
 
   checkUser() async {
-    if (emailController.text.length == 0) {
+    if (usernameController.text.length == 0) {
       setState(() {
         circular = false;
         validate = false;
@@ -35,7 +35,7 @@ class _signupState extends State<signup> {
       });
     } else {
       var response =
-      await networkHandler.get("/user/checkUsername/${emailController.text}");
+      await networkHandler.get("/user/checkUsername/${usernameController.text}");
       if (response["Status"]) {
         setState(() {
           circular = false;
@@ -54,7 +54,7 @@ class _signupState extends State<signup> {
     if (true) {
       Map<String, String> data = {
         "name": nameController.text,
-        "email": emailController.text,
+        "username": usernameController.text,
         "password": passController.text,
         "mobile": numController.text,
         "city": cityController.text,
@@ -103,7 +103,7 @@ class _signupState extends State<signup> {
                     InputWithIcon(
                       icon: Icons.email,
                       hint: "Enter Email...",
-                      Controller: emailController,
+                      Controller: usernameController,
                       isPasswordField: false,
                     ),
                     SizedBox(height: 20,),

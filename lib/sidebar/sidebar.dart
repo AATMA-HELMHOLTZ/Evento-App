@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Models/user.dart';
 import 'package:flutter_app/Screens/editProfile.dart';
 import 'package:flutter_app/Screens/onboarding.dart';
 import 'package:flutter_app/Screens/settingsPage.dart';
+import 'package:flutter_app/Services/networkHandler.dart';
 import 'package:flutter_app/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'menu_item.dart';
 
@@ -27,6 +30,23 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
 
   final _animationDuration = const Duration(milliseconds: 500);
 
+  NetworkHandler networkHandler = NetworkHandler();
+  ProfileModel profileModel = ProfileModel();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //
+  // }
+
+  void fetchData() async {
+    var response = await networkHandler.get("/api/v1/user/get");
+    setState(() {
+      profileModel = ProfileModel.fromJson(response["data"]);
+      //circular = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +54,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
     isSidebarOpenedStreamController = PublishSubject<bool>();
     isSidebarOpenedStream = isSidebarOpenedStreamController.stream;
     isSidebarOpenedSink = isSidebarOpenedStreamController.sink;
+    fetchData();
   }
 
   @override
@@ -98,11 +119,11 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         },
                         child: ListTile(
                           title: Text(
-                            "Tejas Hirawat",
+                            profileModel.name == null ? '': profileModel.name,
                             style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800),
                           ),
                           subtitle: Text(
-                            "www.MeanMachiNe.com",
+                            profileModel.username == null ? '': profileModel.username,
                             style: TextStyle(
                               color: Color(0xFF1BB5FD),
                               fontSize: 13,
@@ -133,19 +154,19 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         },
                       ),
                       MenuItem(
-                        icon: Icons.shopping_cart,
-                        title: "My Cart",
+                        icon: Icons.lock_clock,
+                        title: "History",
                         onTap: () {
                           onIconPressed();
-                          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyAccountClickedEvent);
+                          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HistoryClickedEvent);
                         },
                       ),
                       MenuItem(
-                        icon: Icons.event_available_outlined,
-                        title: "Previous Events",
+                        icon: Icons.info_outline_rounded,
+                        title: "About Us",
                         onTap: () {
                           onIconPressed();
-                          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SuggestionsClickedEvent);
+                          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.AboutUsClickedEvent);
                         },
                       ),
                       MenuItem(

@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_app/Screens/homepage.dart';
-import 'package:flutter_app/Screens/myaccountspage.dart';
-import 'package:flutter_app/Screens/suggestions.dart';
+import 'package:flutter_app/Screens/history.dart';
+import 'package:flutter_app/Screens/aboutUs.dart';
 
 enum NavigationEvents {
   HomePageClickedEvent,
-  MyAccountClickedEvent,
-  SuggestionsClickedEvent,
+  HistoryClickedEvent,
+  AboutUsClickedEvent,
 }
 
 abstract class NavigationStates {}
@@ -21,11 +21,11 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.HomePageClickedEvent:
         yield HomePage();
         break;
-      case NavigationEvents.MyAccountClickedEvent:
-        yield MyAccountsPage();
+      case NavigationEvents.HistoryClickedEvent:
+        yield HistoryPage();
         break;
-      case NavigationEvents.SuggestionsClickedEvent:
-        yield Suggestions();
+      case NavigationEvents.AboutUsClickedEvent:
+        yield AboutUs();
         break;
     }
   }

@@ -3,19 +3,19 @@ const FOOD_DATA = [
     "name":"Photographers",
     "image":"photog.png"
   },{
-    "name":"Decorations",
+    "name":"Decorator",
     "image":"deco.png"
   },
   {
-    "name":"Exciting Djs",
+    "name":"Dj",
     "image":"dj.png"
   },
   {
-    "name":"Florists",
+    "name":"Florist",
     "image":"florist.png"
   },
   {
-    "name":"Caterers",
+    "name":"Caterer",
     "image":"catering.png"
   },
   {
@@ -23,7 +23,7 @@ const FOOD_DATA = [
     "image":"bakery.png"
   },
   {
-    "name":"Musical Bands",
+    "name":"Band",
     "image":"band.png"
   },
   {

@@ -35,10 +35,17 @@ dependencies:
   flip_card: ^0.4.4
   image_picker:
   rflutter_alert: ^1.1.0
+  json_annotation:
+  shimmer: ^1.1.2
+  fancy_shimmer_image:
+  flutter_webview_plugin: ^0.3.11
+  rating_bar: ^0.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

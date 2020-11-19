@@ -54,7 +54,15 @@ class _IndividualSearchState extends State<IndividualSearch> {
         title: Text(name),
         backgroundColor: Color(0xFFB056674),
       ),
-      body: ListView.builder(
+      body: vendors == null ? Container(
+        child: Center(
+          child: Text('L O A D I N G . . . ',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 40
+          ),),
+        ),
+      ):ListView.builder(
         itemCount: vendors == null ? 1 : vendors.length,
         itemBuilder: (context, index) {
           return Column(
@@ -100,11 +108,12 @@ class _IndividualSearchState extends State<IndividualSearch> {
                                   ),),
                               ),
                               SizedBox(height: 10,),
-                              Text('Vendor Ratings ' + vendors[index]['avgStar'].toString(),
+                              Text('Vendor Ratings : ' + vendors[index]['avgStar'].toString(),
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.teal,
                                   backgroundColor: Colors.white,
+                                  fontWeight: FontWeight.bold
                                 )),
                               SizedBox(height: 10,),
                               Text('City : ' + vendors[index]['city'],
@@ -112,6 +121,7 @@ class _IndividualSearchState extends State<IndividualSearch> {
                                   fontSize: 15,
                                   color: Colors.teal,
                                   backgroundColor: Colors.white,
+                                  fontWeight: FontWeight.bold
                                 ),)
                             ],
                           ),

@@ -49,7 +49,15 @@ class _VendorProfileState extends State<VendorProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
+      body: vendors == null ? Container(
+        child: Center(
+          child: Text('L O A D I N G . . . ',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40
+            ),),
+        ),
+      ): Stack(
         children: <Widget>[
           CustomScrollView(
             slivers: <Widget>[

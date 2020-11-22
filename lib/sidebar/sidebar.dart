@@ -130,9 +130,10 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             ),
                           ),
                           leading: CircleAvatar(
-                            child: Icon(
+                            child: profileModel.img == null ? Icon(
                               Icons.perm_identity,
                               color: Colors.white,
+                            ) : Image.network(profileModel.img,
                             ),
                             radius: 40,
                           ),

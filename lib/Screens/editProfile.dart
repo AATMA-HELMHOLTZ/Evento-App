@@ -112,7 +112,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: AssetImage("assets/images/Anniversary.jpg"),
+                    image: NetworkImage(profileModel.img),
                     // imagefile == null ?
                     // AssetImage("assets/images/Anniversary.jpg") :
                     // FileImage(File(imagefile.path)),
@@ -169,7 +169,17 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ],
       ),
-      body: Padding(
+      body: Scaffold(
+    backgroundColor: Colors.white,
+    body: profileModel.name == null ? Container(
+        child: Center(
+        child: Text('L O A D I N G . . . ',
+        style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 40
+        ),),
+        ),
+    ):Padding(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: Container(
           child: GestureDetector(
@@ -250,7 +260,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
-    );
+    ));
   }
   TextField buildTextField(String labeltext, String placeHolder, bool ispasswordField, TextEditingController txtController)
   {

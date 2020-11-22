@@ -36,7 +36,7 @@ class _IndividualSearchState extends State<IndividualSearch> {
   //var res;
   //NetworkHandler networkHandler = NetworkHandler();
   void mailRequest(String address) async{
-    res = await networkHandler.get('vendors/get/mail/$address',);
+    res = await networkHandler.get('/vendors/get/mail/$address',);
   }
 
   @override

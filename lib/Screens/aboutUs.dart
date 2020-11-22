@@ -14,7 +14,7 @@ class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    List name = ['Apurva', 'Ojha', 'Teja', 'Chotu', 'Mohen'];
+    List name = ['Apurva Bhardwaj', 'Aditya Ojha', 'Teja', 'Chotu', 'Mohen'];
     List desc = ['He is the glue which binds the team together. An expert on drones and an AI enthusiast that can develop Windows applications.',
       'If creativity was a crime, then he would be in jail. The most creative person in the team, handles all the video editing and poster making.',
       'The smartest guy in the room. A really fast learner who has a strong grip on topics like penetration testing and ethical Hacking.',

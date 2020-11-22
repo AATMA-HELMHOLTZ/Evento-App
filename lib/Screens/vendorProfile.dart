@@ -37,11 +37,13 @@ class _VendorProfileState extends State<VendorProfile> {
     response = response['vendors'];
     setState(() {
       vendors = response;
+     // vendors = vendors.reversed.toList();
     });
   }
   var res;
   void mailRequest(String address) async{
-    res = await networkHandler.get('vendors/get/mail/$address',);
+    print("VENDOR ID" + address);
+    res = await networkHandler.get('/vendors/get/mail/$address',);
   }
 
 
@@ -159,6 +161,7 @@ class _VendorProfileState extends State<VendorProfile> {
                             emptyIcon: Icons.star_border,
                           ),
                         ),
+
                         SizedBox(height: 8,),
                         FadeAnimation(1.6,
                             Center(child: Text("Rated by " + vendors[index]['ratings'].length.toString() + ' users', style: TextStyle(color: Colors.black54, fontSize: 15),))

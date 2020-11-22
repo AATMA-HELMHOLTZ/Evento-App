@@ -81,17 +81,17 @@ part 'user.g.dart';
 @JsonSerializable()
 class ProfileModel {
   String name;
-  String password;
+  String appPassword;
   String username;
   int mobile;
-  //String pic;
+  String img;
   String city;
   ProfileModel(
       {this.name,
-        this.password,
+        this.appPassword,
         this.username,
         this.mobile,
-        //this.pic,
+        this.img,
         this.city});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -103,7 +103,8 @@ Map<String, dynamic> $ProfileModelToJson(ProfileModel instance) =>
     <String, dynamic>{
       'name': instance.name,
       'username': instance.username,
-      'password': instance.password,
+      'appPassword': instance.appPassword,
       'mobile': instance.mobile,
       'city': instance.city,
+      'img': instance.img
     };

@@ -22,8 +22,10 @@ class _HistoryPageState extends State<HistoryPage> {
     print(response);
     setState(() {
       vendorsCart = response;
+      //vendorsCart = vendorsCart.reversed.toList();
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -64,14 +66,14 @@ class _HistoryPageState extends State<HistoryPage> {
                 itemBuilder: (context,index){
                   return Card(
                     child: Hero(
-                        tag: vendorsCart[index]['_id'],
+                        tag: vendorsCart[index]['vendor']['_id'],
                         child: Material(
                           child: InkWell(
                             child: GridTile(
                               child: Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: NetworkImage(vendorsCart[index]['images'][0]),
+                                    backgroundImage: NetworkImage(vendorsCart[index]['vendor']['images'][0]),
                                     radius: 70,
                                   ),
                                   SizedBox(width: 30,),
@@ -99,7 +101,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                           SafeArea(
                                             child: Align(
                                               alignment: Alignment.center,
-                                              child: Text(vendorsCart[index]['name'],
+                                              child: Text(vendorsCart[index]['vendor']['name'],
                                               style: TextStyle(
                                                 color: Color(0xFFB056674),
                                                 fontSize: 20
@@ -107,7 +109,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                             ),
                                           ),
                                           SizedBox(height: 20,),
-                                          Text('time',
+                                          Text(vendorsCart[index]['date'],
                                             style: TextStyle(
                                               color: Color(0xFFB056674),
                                               fontSize: 15
@@ -128,7 +130,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     ),),
                                   trailing: IconButton(
                                     onPressed: (){
-                                      String vname = vendorsCart[index]['service'];
+                                      String vname = vendorsCart[index]['vendor']['service'];
                                       Navigator.push(context, PageTransition(
                                           type: PageTransitionType.bottomToTop,
                                           child: VendorProfile(name: vname, index: index,)));

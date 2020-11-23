@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/templateView.dart';
 import 'package:flutter_app/Services/networkHandler.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 class MoreTemp extends StatefulWidget {
@@ -70,7 +72,7 @@ class _MoreTempState extends State<MoreTemp> {
                                   ),),
                                   trailing: IconButton(
                                     onPressed: (){
-
+                                      Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ColorList(ind: index,)));
                                     },
                                     icon: Icon(Icons.chevron_right),
                                     color: Color(0xFFB056674),

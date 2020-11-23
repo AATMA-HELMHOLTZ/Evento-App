@@ -173,7 +173,7 @@ class _ColorListState extends State<ColorList> {
                   return Container(
                     height: 100,
                     child: CheckboxListTile(
-                      title: Text(events[ind]['servicesOffered'][index]),
+                      title: Text(events[ind]['servicesOffered'][index].toUpperCase()),
                       value: checked,
                       activeColor: Color(0xFFB056674),
                       checkColor: Colors.white,

@@ -66,11 +66,17 @@ bool selected = false;
 String title;
 
 class ColorList extends StatefulWidget {
+
+  int ind;
+  ColorList({Key key, @required this.ind}): super(key: key);
   @override
-  _ColorListState createState() => _ColorListState();
+  _ColorListState createState() => _ColorListState(ind);
 }
 
 class _ColorListState extends State<ColorList> {
+
+  int ind;
+  _ColorListState(this.ind);
   ValueNotifier<int> _activeColorNotifier;
   ValueNotifier<int> _checkColorNotifier;
 
@@ -107,7 +113,15 @@ class _ColorListState extends State<ColorList> {
         title: Text("Your Template"),
         backgroundColor: Color(0xFFB056674),
       ),
-      body: SafeArea(
+      body: events == null ? Container(
+        child: Center(
+          child: Text('L O A D I N G . . . ',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40
+            ),),
+        ),
+      ): SafeArea(
         child: Column(
           children: <Widget>[
             SizedBox(height: 20,),
@@ -154,12 +168,12 @@ class _ColorListState extends State<ColorList> {
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: 4,
+                itemCount: events[ind]['servicesOffered'].length,
                 itemBuilder: (context, index) {
                   return Container(
                     height: 100,
                     child: CheckboxListTile(
-                      title: Text(events[1]['servicesOffered'][index]),
+                      title: Text(events[ind]['servicesOffered'][index]),
                       value: checked,
                       activeColor: Color(0xFFB056674),
                       checkColor: Colors.white,

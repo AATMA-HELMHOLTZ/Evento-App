@@ -310,7 +310,8 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
                 ),
               ): GestureDetector(
                 onTap: (){
-                  Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ColorList()));
+                  int index = 0;
+                  Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ColorList(ind: index,)));
                 },
                 child: Container(
                   width: 250,
@@ -377,35 +378,41 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
                     ),
                   ),
                 ),
-              ): Container(
-                width: 250,
-                margin: EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(events[1]['image']),
-                      fit: BoxFit.cover,
+              ): GestureDetector(
+                onTap: (){
+                  int index = 1;
+                  Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ColorList(ind: index,)));
+                },
+                child: Container(
+                  width: 250,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(events[1]['image']),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          events == null ? 'a' : events[1]['nameOfEvent'],
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        events == null ? 'a' : events[1]['nameOfEvent'],
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -441,35 +448,41 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
                     ),
                   ),
                 ),
-              ): Container(
-                width: 250,
-                margin: EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(events[2]['image']),
-                      fit: BoxFit.cover,
+              ): GestureDetector(
+                onTap: (){
+                  int index = 2;
+                  Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ColorList(ind: index,)));
+                },
+                child: Container(
+                  width: 250,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(events[2]['image']),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          events[2]['nameOfEvent'],
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        events[2]['nameOfEvent'],
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
                   ),
                 ),
               ),

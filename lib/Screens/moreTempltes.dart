@@ -39,7 +39,15 @@ class _MoreTempState extends State<MoreTemp> {
           title: new Text('Templates'),
           backgroundColor: Color(0xFFB056674),
         ),
-        body: Padding(
+        body: events == null ? Container(
+          child: Center(
+            child: Text('L O A D I N G . . . ',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40
+              ),),
+          ),
+        ):Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
             child: GridView.builder(
